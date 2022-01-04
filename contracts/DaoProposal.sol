@@ -6,8 +6,17 @@ import "hardhat/console.sol";
 import "./DaoMembershipFee.sol";
 
 contract DaoProposal is DaoMembershipFee {
+  struct DaoStake {
+    uint128 amount;
+    uint128 startTime;
+  }
 
-  constructor(string memory _name, string memory _symbol) DaoMembershipFee(_name, _symbol) {}
+  mapping(address => DaoStake) internal stakedTokens;
+  uint256 internal totalStaked;
+
+  constructor(string memory _name, string memory _symbol)
+    DaoMembershipFee(_name, _symbol)
+  {}
 
   /**
    *  @dev Voting in session
@@ -43,12 +52,11 @@ contract DaoProposal is DaoMembershipFee {
 
   // TODO: BRING PROPOSAL TO VOTE IF IT THE START DATE IS GOOD.
 
-
   /**
    * @notice All votes are public. DAO members should never disclose their DAO wallet ownership.
    *         Votes are weighed by the time tokens are staked for. Votes that are staked longer has a max weight.
    *         Proposal is instantly approved or denied when the last required vote is cast.
-  */
+   */
   function voteOnProposal(address _proposalContractAddress, bool _approve)
     external
     onlyMembers
@@ -71,5 +79,4 @@ contract DaoProposal is DaoMembershipFee {
     private
     onlyMembers
   {}
-
 }

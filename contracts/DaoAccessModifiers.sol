@@ -3,9 +3,9 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract DaoAccessModifiers is ERC721 {
+contract DaoAccessModifiers is ERC721Enumerable {
   /** Error Codes */
   string public constant NO_MEMBERS_ALLOWED = "10001";
   string public constant ONLY_MEMBERS_ALLOWED = "10002";
