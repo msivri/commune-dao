@@ -19,14 +19,24 @@ Each proposal is a smart contract that uses the CommuneDAO proposal interface to
 8. If approved, the proposal goes to a general vote. The general vote only requires a simple majority.
 9. If the general vote approves the proposal, the associated smart contract receives the funds, triggering the smart contract to perform its intended purpose.
 
-Review Diagram
+# Review Diagram 
+
 ![alt text](images/diagram.png?raw=true)
 
 
-Screenshots
+# Screenshots 
+
+## View all proposals
+
 ![alt text](images/screen1.png?raw=true)
+## Review a single proposal
+
 ![alt text](images/screen2.png?raw=true)
+## Apply to be an auditor
+
 ![alt text](images/screen3.png?raw=true)
+## Vote on a proposal
+
 ![alt text](images/screen4.png?raw=true)
 
 
