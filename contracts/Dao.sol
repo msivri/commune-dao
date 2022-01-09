@@ -3,9 +3,9 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-import "./DaoProposal.sol";
+import "./DaoProposalAuditor.sol";
 
-contract Dao is DaoProposal {
+contract Dao is DaoProposalAuditor {
   /** Error Codes */
   string public constant INCORRECT_FEE_AMOUNT = "50001";
   string public constant NO_TOKEN_TO_RECLAIM = "50002";
@@ -13,7 +13,7 @@ contract Dao is DaoProposal {
   string public constant INVALID_AMOUNT_TO_LEAVE_STAKE = "50004";
 
   constructor(string memory _name, string memory _symbol)
-    DaoProposal(_name, _symbol)
+    DaoProposalAuditor(_name, _symbol)
   {}
 
   /**
@@ -65,7 +65,7 @@ contract Dao is DaoProposal {
     }
 
     // Check if any tokens are staked
-    DaoStake storage senderStake = memberToStakedTokens[msg.sender];
+    Stake storage senderStake = memberToStakedTokens[msg.sender];
     if (senderStake.amount > 0) {
       totalStaked -= senderStake.amount;
       senderStake.amount = 0;
@@ -87,7 +87,7 @@ contract Dao is DaoProposal {
     }
 
     // Stake token after transfer
-    DaoStake storage senderStake = memberToStakedTokens[msg.sender];
+    Stake storage senderStake = memberToStakedTokens[msg.sender];
     senderStake.amount += uint128(_amount);
     if (senderStake.startTime == 0) {
       senderStake.startTime = uint128(block.timestamp);
@@ -100,7 +100,7 @@ contract Dao is DaoProposal {
    * @dev Transfers token to msg.sender if any of its tokens are staked.
    */
   function leaveStake(uint256 _amount) external onlyMembers {
-    DaoStake storage senderStake = memberToStakedTokens[msg.sender];
+    Stake storage senderStake = memberToStakedTokens[msg.sender];
     require(senderStake.amount >= _amount, INVALID_AMOUNT_TO_LEAVE_STAKE);
 
     // Reduce staked amount

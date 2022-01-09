@@ -3,44 +3,27 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-import "./DaoConfig.sol";
+import "./DaoStake.sol";
 
 /**
- *  Handles all the proposal and voting logic
+ *  @dev Handles all the proposal and voting logic
  */
-contract DaoProposal is DaoConfig {
+contract DaoProposal is DaoStake {
   /**
-   *  Stake Setup
-   */
-  struct DaoStake {
-    uint128 amount;
-    uint128 startTime;
-  }
-
-  /**
-   *  Track who is staking and how much.
-   */
-  mapping(address => DaoStake) internal memberToStakedTokens;
-  /**
-   *  Track total staked.
-   */
-  uint256 internal totalStaked;
-
-  /**
-   *  Track who voted to prevent multiple voting
+   *  @dev Track who voted to prevent multiple voting
    */
   mapping(address => mapping(address => bool)) internal auditorVotedOnProposal;
-  mapping(address => mapping(address => bool)) internal memberVotedOnAuditor;
   mapping(address => mapping(address => bool)) internal memberVotedOnProposal;
 
   /**
-   *  Proposal
+   *  @dev Proposal
    */
   struct Proposal {
     address author;
     address smartContract;
     bool auditPassed;
     bool auditRequired;
+    bool auditorsAreReady;
     bool approved;
     bool denied;
     bool banned;
@@ -50,6 +33,8 @@ contract DaoProposal is DaoConfig {
     uint256 auditFinishedAt;
     uint128 submittedAt;
     uint128 expireAt;
+    uint128 requiredAuditorCount;
+    uint128 auditBanCount;
     uint64 auditYesVotes;
     uint64 auditNoVotes;
     uint64 generalYesVotes;
@@ -58,7 +43,7 @@ contract DaoProposal is DaoConfig {
   mapping(address => Proposal) internal proposals;
 
   constructor(string memory _name, string memory _symbol)
-    DaoConfig(_name, _symbol)
+    DaoStake(_name, _symbol)
   {}
 
   /**
@@ -78,10 +63,11 @@ contract DaoProposal is DaoConfig {
   }
 
   /**
-   * @notice Queues a propoal
+   * @notice Proposals require a deposit
    */
   function proposeSmartContract(address _proposalContractAddress)
     external
+    payable
     onlyMembers
   {}
 
@@ -105,8 +91,6 @@ contract DaoProposal is DaoConfig {
     proposal.isRemovedByAuthor = true;
   }
 
-  // TODO: BRING PROPOSAL TO VOTE IF IT THE START DATE IS GOOD.
-
   /**
    * @notice All votes are public.
    */
@@ -114,17 +98,6 @@ contract DaoProposal is DaoConfig {
     external
     onlyMembers
   {}
-
-
-  /**
-   * @notice A proposal is denied when it is expired or voting threshold passed to disapprove.
-   * @dev Return any funds committed to the treasury
-   */
-  function banProposalAuthor(address _proposalContractAddress)
-    private
-    onlyMembers
-  {}
-
 
   /**
    * @notice Proposal can be only executed by the approved proposal.
