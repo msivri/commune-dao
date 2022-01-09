@@ -108,22 +108,13 @@ contract DaoProposal is DaoConfig {
   // TODO: BRING PROPOSAL TO VOTE IF IT THE START DATE IS GOOD.
 
   /**
-   * @notice All votes are public. DAO members should never disclose their DAO wallet ownership.
-   *         Votes are weighed by the time tokens are staked for. Votes that are staked longer has a max weight.
+   * @notice All votes are public.
    */
   function voteOnProposal(address _proposalContractAddress, bool _approve)
     external
     onlyMembers
   {}
 
-  /**
-   * @notice Proposal can be only executed by the approved proposal.
-   * @dev Execute proposal.
-   */
-  function executeProposal(address _proposalContractAddress)
-    external
-    onlyApprovedProposal
-  {}
 
   /**
    * @notice A proposal is denied when it is expired or voting threshold passed to disapprove.
@@ -132,6 +123,16 @@ contract DaoProposal is DaoConfig {
   function banProposalAuthor(address _proposalContractAddress)
     private
     onlyMembers
+  {}
+
+
+  /**
+   * @notice Proposal can be only executed by the approved proposal.
+   * @dev Execute proposal.
+   */
+  function executeProposal(address _proposalContractAddress)
+    external
+    onlyApprovedProposal
   {}
 
   /**
