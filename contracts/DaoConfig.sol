@@ -10,7 +10,7 @@ contract DaoConfig is DaoAccessModifiers {
 
   /** Fee to join the DAO */
   uint256 public membershipFee = 0.01 ether;
-  
+
   // TODO: PACKING OPTIMIZATION BELOW
 
   /** Max number of tokens allowed */
@@ -29,7 +29,8 @@ contract DaoConfig is DaoAccessModifiers {
   uint256 public requiredAuditorVoteToBanPercentage = 100;
   /** Audit period will expire after this much time is passed between election and voting. Time-sensetive proposals may expire before this. */
   uint256 public auditExpirationPeriodInSeconds = 1209600; // Default is 14 days
-
+  /** The length of time for stake period. */
+  uint256 public requiredStakePeriodInSeconds = 1209600; // Default is 14 days
 
   /** Error Codes */
   constructor(string memory _name, string memory _symbol)

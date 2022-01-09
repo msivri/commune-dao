@@ -28,8 +28,8 @@ contract DaoProposal is DaoStake {
     bool denied;
     bool banned;
     bool isRemovedByAuthor;
-    uint256 fundsRequired;
-    uint256 fundsDeposited;
+    uint256 fundsRequiredAmount;
+    uint256 fundsDepositedAmount;
     uint256 auditFinishedAt;
     uint128 submittedAt;
     uint128 expireAt;
@@ -69,7 +69,11 @@ contract DaoProposal is DaoStake {
     external
     payable
     onlyMembers
-  {}
+  {
+    // Check if sent amount is correct amount for the deposit
+    // Check if required stake length is fullfilled
+    // Create proposal
+  }
 
   /**
    * @notice Only an expired or denied porposal can be removed.
@@ -97,7 +101,9 @@ contract DaoProposal is DaoStake {
   function voteOnProposal(address _proposalContractAddress, bool _approve)
     external
     onlyMembers
-  {}
+  {
+    // Check if audit passed, not removed and not banned
+  }
 
   /**
    * @notice Proposal can be only executed by the approved proposal.
@@ -106,7 +112,9 @@ contract DaoProposal is DaoStake {
   function executeProposal(address _proposalContractAddress)
     external
     onlyApprovedProposal
-  {}
+  {
+    // Check if audit passed, not removed and not banned, and approved
+  }
 
   /**
    * @dev Helper function to check if proposal is expired.
