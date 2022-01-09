@@ -3,14 +3,17 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "./DaoErrorCodes.sol";
 
-contract DaoAccessModifiers is ERC721Enumerable {
-  /** Error Codes */
-  string public constant NO_MEMBERS_ALLOWED = "10001";
-  string public constant ONLY_MEMBERS_ALLOWED = "10002";
+contract DaoAccessModifiers is DaoErrorCodes { 
 
-  constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
+  /** State mappings used to track access modifiers  */
+  mapping(address => address) internal proposalToAuthor;
+  mapping(address => bool) internal approvedProposals; 
+
+  constructor(string memory _name, string memory _symbol)
+    DaoErrorCodes(_name, _symbol)
+  {}
 
   /**
    *  @dev Only Non Members
@@ -27,4 +30,25 @@ contract DaoAccessModifiers is ERC721Enumerable {
     require(balanceOf(msg.sender) > 0, ONLY_MEMBERS_ALLOWED);
     _;
   }
+
+
+  /** 
+   * @dev Only Proposal Author
+   */
+  modifier onlyProposalAuthor(address _proposalAddress) {
+    require(
+      proposalToAuthor[_proposalAddress] == msg.sender,
+      ONLY_PROPOSAL_AUTHOR
+    );
+    _;
+  }
+
+  /**
+   * @notice used for allowing approved proposals to make changes to configurations such as membership fee, increasing member count, etc.
+   * @dev Only Approved Proposals
+   */
+  modifier onlyApprovedProposal() {
+    require(approvedProposals[msg.sender], ONLY_APPROVED_PROPOSAL_ALLOWED);
+    _;
+  }  
 }

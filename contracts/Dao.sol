@@ -65,7 +65,7 @@ contract Dao is DaoProposal {
     }
 
     // Check if any tokens are staked
-    DaoStake storage senderStake = stakedTokens[msg.sender];
+    DaoStake storage senderStake = memberToStakedTokens[msg.sender];
     if (senderStake.amount > 0) {
       totalStaked -= senderStake.amount;
       senderStake.amount = 0;
@@ -87,7 +87,7 @@ contract Dao is DaoProposal {
     }
 
     // Stake token after transfer
-    DaoStake storage senderStake = stakedTokens[msg.sender];
+    DaoStake storage senderStake = memberToStakedTokens[msg.sender];
     senderStake.amount += uint128(_amount);
     if (senderStake.startTime == 0) {
       senderStake.startTime = uint128(block.timestamp);
@@ -100,7 +100,7 @@ contract Dao is DaoProposal {
    * @dev Transfers token to msg.sender if any of its tokens are staked.
    */
   function leaveStake(uint256 _amount) external onlyMembers {
-    DaoStake storage senderStake = stakedTokens[msg.sender];
+    DaoStake storage senderStake = memberToStakedTokens[msg.sender];
     require(senderStake.amount >= _amount, INVALID_AMOUNT_TO_LEAVE_STAKE);
 
     // Reduce staked amount

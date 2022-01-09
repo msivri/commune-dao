@@ -8,6 +8,7 @@ import "hardhat/console.sol";
 contract DaoBank {
 
 
+// Reserve Tokens for developers
 
 // Withdraw Funds
 
