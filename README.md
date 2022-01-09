@@ -21,6 +21,8 @@ Each proposal is a smart contract that uses the CommuneDAO proposal interface to
 
 # Review Diagram 
 
+![alt text](images/circle-diagram.png?raw=true)
+
 ![alt text](images/diagram.png?raw=true)
 
 
