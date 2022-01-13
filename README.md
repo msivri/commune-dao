@@ -3,7 +3,7 @@ A DAO that aims to have on-chain proposals audited and approved by the community
 
 The Commune DAO intends to increase trust and community engagement and automate proposal executions with additional smart contracts.
 
-# What makes Commune DAO different
+## What makes Commune DAO different
 The core DAO contract only handles membership, staking, auditing and proposal approval. All proposals must be smart contracts. These smart contracts can do the following:
 
 1. Change any configuration of the DAO contract such as membership fees, minimum staking period, voting threshold, etc.
