@@ -1,9 +1,20 @@
 # Commune DAO
 A DAO that aims to have on-chain proposals audited and approved by the community.
 
-
-
 The Commune DAO intends to increase trust and community engagement and automate proposal executions with additional smart contracts.
+
+# What makes Commune DAO different
+The core DAO contract only handles membership, staking, auditing and proposal approval. All proposals must be smart contracts. These smart contracts can do the following:
+
+1. Change any configuration of the DAO contract such as membership fees, minimum staking period, voting threshold, etc.
+2. Request funds for projects or investments.
+3. Transfer funds to the DAO treasury.
+
+For example, a member can create a proposal that locks membership fee to a set USD price with a minimum ETH price. Members can create proposals that buy other crypto assets with a minimum lock period.
+
+This makes the DAO amazingly modular and future-proof. The expert based auditing system also allows general members to better understand what they are voting for. See below for the process.
+
+The ultimate goal is to make all projects and investments verifiable by blockchain. For example, all asset purchases and management, including physical assets such as land, business, and vehicles are all done through blockchain by adding smart contract proposals, no paperwork required. All projects should also be done on the blockchain with intermediary verifiers. All earnings should go in to the DAO treasury to be split by ownership.
 
 **If you have suggestions, please open an issue.** *Use at your own risk.*
 
